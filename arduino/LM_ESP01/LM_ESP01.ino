@@ -8,11 +8,8 @@
 #include <OSCMessage.h>
 #include <OSCBundle.h>
 #include <OSCData.h>
+#include "SSID.h"
 
-char ssid[] = "vertigo";          // your network SSID (name)
-char pass[] = "CreateIoT2018";     // your network password
-//char ssid[] = "SEXED2.4G";          // your network SSID (name)
-//char pass[] = "666devilHAMHAM";     // your network password
 
 // A UDP instance to let us send and receive packets over UDP
 WiFiUDP Udp;
