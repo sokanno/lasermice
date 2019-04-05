@@ -16,14 +16,14 @@ float attackTime = 0.001;
 float sustainTime = 0.002;
 float sustainLevel = 0.01;
 float releaseTime = 0.01;
-float volume = 0.2;
+float volume = 0.4;
 
 int count = 0;
 
 //for control parameters
 import controlP5.*;
 ControlP5 cp5;
-int blinkTime = 50;
+int blinkTime = 100;
 
 int loopTime = 3000;
 float range = 1.0;
@@ -40,18 +40,17 @@ String date;
 
 ArrayList<Rotator> rots;
 //number and size of modules
-int row = 5;
-int column = 7;
+int row = 10;
+int column = 12;
 int moduleSize = 5; //half diamiter
 
 // turnAmount is angle that rotater turns when hit other module or wall.
 // from science of leaf angle of "5/13".
 float turnAmount = 2.416; 
 
-
 void setup() {
   println(loopTime);
-  size(1100, 500);
+  size(1200, 1000);
   cp5setup();
   date = year() + nf(month(), 2) + nf(day(), 2) + "-"  + nf(hour(), 2) + nf(minute(), 2) + ".csv"; 
   noise = new WhiteNoise(this);
@@ -93,7 +92,7 @@ void draw() {
     }
   }
   fill(200);
-  text(frameRate, 20, height-40);
+  //text(frameRate, 20, height-40);
 
   if (millis() > reportTime) {
     //    report();
@@ -113,6 +112,9 @@ void keyPressed() {
       r.movement();
       r.update(motorSpeed, loopTime, blinkTime, laserRange);
     }
+  }
+  if(key == ' '){
+    startFlag = !startFlag;
   }
 }
 

@@ -4,6 +4,8 @@ o  >>|    1724    12bit   turn right
 o  |<<    3772    12bit   turn left
 o  play   1436    12bit   play
 o  stop   412     12bit   stop
+o  >>     924     12bit   laser On
+o  <<     3484    12bit   laser normal
 
 DIY IR-Commander command list
 id is 8bit(0~255)
@@ -75,6 +77,16 @@ void irUpdate() {
     }
     if (results.value == 412 && irCommandFlag) { // stop the behavior
       playFlag = false;
+      irCommandFlag = false;
+      irNotification = true;
+    }
+    if (results.value == 924 && irCommandFlag) { // play the behavior
+      keepLaser = true;
+      irCommandFlag = false;
+      irNotification = true;
+    }
+    if (results.value == 3484 && irCommandFlag) { // play the behavior
+      keepLaser = false;
       irCommandFlag = false;
       irNotification = true;
     }

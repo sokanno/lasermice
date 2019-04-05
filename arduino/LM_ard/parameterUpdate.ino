@@ -74,6 +74,7 @@ void parameterUpdate() {
         break;
       case 6:
         loopDigit = value;
+        curveSteepness = value / 4.0;
         irCommandFlag = false;
         irNotification = true;
         break;
@@ -81,18 +82,18 @@ void parameterUpdate() {
         switch (value) {
           case 1: // play
             playFlag = true;
-            followLightFlag = false;
+            goToChargeFlag = false;
             irCommandFlag = false;
             irNotification = true;
             break;
           case 2: // stop
             playFlag = false;
-            followLightFlag = false;
+            goToChargeFlag = false;
             irCommandFlag = false;
             irNotification = true;
             break;
           case 3: // go to charge
-            followLightFlag = true;
+            goToChargeFlag = true;
             playFlag = false;
             irCommandFlag = false;
             irNotification = true;
@@ -213,23 +214,63 @@ void parameterUpdate() {
             irCommandFlag = false;
             irNotification = true;
             break;
-          case 18: // Three Sensors Mode activate
+          case 18: // detectReport activate
             detectReport = true;
             irCommandFlag = false;
             irNotification = true;
             break;
-          case 19: // Three Sensors Mode deactivate
+          case 19: // detectReport deactivate
             detectReport = false;
             irCommandFlag = false;
             irNotification = true;
             break;
-          case 20: // Three Sensors Mode activate
+          case 20: // commandReaction activate
             commandReaction = true;
             irCommandFlag = false;
             irNotification = true;
             break;
-          case 21: // Three Sensors Mode deactivate
+          case 21: // commandReaction deactivate
             commandReaction = false;
+            irCommandFlag = false;
+            irNotification = true;
+            break;
+          case 22: // speedModulation activate
+            speedModulation = true;
+            irCommandFlag = false;
+            irNotification = true;
+            break;
+          case 23: // speedModulation deactivate
+            speedModulation = false;
+            irCommandFlag = false;
+            irNotification = true;
+            break;
+          case 24: // lightFollow activate
+            lightFollow = true;
+            irCommandFlag = false;
+            irNotification = true;
+            break;
+          case 25: // lightFollow deactivate
+            lightFollow = false;
+            irCommandFlag = false;
+            irNotification = true;
+            break;
+          case 26: // laserScan activate
+            laserScan = true;
+            irCommandFlag = false;
+            irNotification = true;
+            break;
+          case 27: // laserScan deactivate
+            laserScan = false;
+            irCommandFlag = false;
+            irNotification = true;
+            break;
+          case 28: // noForwardMove activate
+            noForwardMove = true;
+            irCommandFlag = false;
+            irNotification = true;
+            break;
+          case 29: // noForwardMove deactivate
+            noForwardMove = false;
             irCommandFlag = false;
             irNotification = true;
             break;
@@ -244,4 +285,3 @@ void parameterUpdate() {
   // Serial.write();
   // Serial.write();
 }
-

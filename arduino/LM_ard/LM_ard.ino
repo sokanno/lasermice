@@ -70,7 +70,7 @@ const int debounce = 4;
 boolean rotateReactFlag = false;
 boolean tailLED = true;
 boolean irReceive = true;
-boolean keepLaser = true;
+boolean keepLaser = false;
 
 // LASER DETECTION
 // buffer for mean filter
@@ -104,18 +104,31 @@ int retreatLength = retreatConstant / motorSpeed;
 // sequence functions
 boolean sequenceMode = false;
 unsigned int sequence;
-boolean beat[16];
+boolean beat[16] = {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 int loopDigit = 16;
 int seqCount = 0;
 boolean seqCountFlag = true;
 
-boolean followLightFlag = false;
+// go to charge
+boolean goToChargeFlag = false;
 
 //for database
 int strikeCount = 0;
 int beShotCount = 0;
 boolean detectReport = false;
 boolean commandReaction = true;
+
+//Speed Modulation
+boolean speedModulation = false;
+
+//light following
+boolean lightFollow = false;
+float curveSteepness = 2.0; // 6bit param, 0.1 ~ 6.5
+boolean laserScan = true; 
+
+//scan but not move
+boolean noForwardMove = false;
+
 
 void setup() {
 //  if (id == 5) BMPconstant = 100000;
@@ -175,6 +188,6 @@ void loop() {
   batteryCheck();
   bumperFunction();
   play();
-  if (followLightFlag) followLight();
+  if (goToChargeFlag) goToCharge();
   if (keepLaser) digitalWrite(LASER, HIGH);
 }

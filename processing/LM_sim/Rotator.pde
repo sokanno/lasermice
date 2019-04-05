@@ -3,7 +3,7 @@ class Rotator {
   float rSpeed, mSpeed, rotSize, angle, targetAngle, capAngle, blinkTime, r;
   int detectCount, shift, type, loopTime, defaultTime, laserRange, ledAngle;
   long shiftTime;
-  boolean pairing, angleMatch, detectFlag, lastDetectFlag, soundFlag, lightType;
+  boolean pairing, angleMatch, detectFlag, lastDetectFlag, soundFlag, lightType, beShot;
   String turnMode, lightMode;
   Rotator (float x, float y, float rs, int lt, int dt, float bt, int rr) {
     location = new PVector(x, y);
@@ -23,6 +23,7 @@ class Rotator {
     laserRange = rr;
     //lightType = lm;
     ledAngle = 5; //for both direction, 10 degree in total.
+    beShot = false;
   }
 
   // detecting other rotator's laser
@@ -47,6 +48,7 @@ class Rotator {
     } else {
       lightMode = "OFF";
       soundFlag = true;
+      beShot = false;
     }
   }
 
@@ -79,6 +81,7 @@ class Rotator {
               //most important line of code for SYNC
               shiftTime = shiftTime + (loopTime - ((millis() + shiftTime) % loopTime));
               lastDetectFlag = true;
+              beShot = true;
             }
           } else {
             detectFlag = false;
@@ -234,7 +237,8 @@ class Rotator {
     line(location.x, location.y, location.x + cos(angle)*rotSize, location.y + sin(angle)*rotSize);
 
     //drawing lasers
-    stroke(0, 255, 0);
+    stroke(0, 255, 0); // green
+
     strokeWeight(2);
     // if(detectCount != 0 || turnMode != "OFF" || lightMode == "ON"){ // when it's on the corner, light is on
     if (lightMode == "ON") { // when it's on the corner, light is on
@@ -244,7 +248,12 @@ class Rotator {
 
       // laser with limit
       for (int i = 0; i<laserRange; i++) {
-        stroke(0, 255, 0, 255-i*255/laserRange);
+        if (beShot) {
+          stroke(255, 0, 0, 255-i*255/laserRange);//laser is red when it is shot.
+          //stroke(0, 255, 0, 255-i*255/laserRange);
+        } else {
+          stroke(0, 255, 0, 255-i*255/laserRange);
+        }
         point(location.x + cos(angle)*i, location.y + sin(angle)*i);
       } 
       // long laser 
