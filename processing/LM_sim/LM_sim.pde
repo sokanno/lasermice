@@ -16,7 +16,7 @@ float attackTime = 0.001;
 float sustainTime = 0.002;
 float sustainLevel = 0.01;
 float releaseTime = 0.01;
-float volume = 0.4;
+float volume = 0.6;
 
 int count = 0;
 
@@ -40,8 +40,8 @@ String date;
 
 ArrayList<Rotator> rots;
 //number and size of modules
-int row = 10;
-int column = 12;
+int row = 7;
+int column = 7;
 int moduleSize = 5; //half diamiter
 
 // turnAmount is angle that rotater turns when hit other module or wall.
