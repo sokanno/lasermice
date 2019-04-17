@@ -30,6 +30,11 @@ void laserDetect_React() {
       Serial1.write(byte(blb));
       Serial1.write(byte(beShotCount - (blb << 8)));
     }
+    //when it's reactor mode, laser detection is trigger to play.
+    if(reactor) {
+      playFlag = true;
+      reactCount = reactTimes;
+    }
   }
   if (bangFlag_SLND) {
     digitalWrite(SOLENOID, HIGH);
@@ -140,4 +145,3 @@ int smoothByMeanFilter(int a) {
   }
   return (int)(sum / BUFFER_LENGTH);
 }
-

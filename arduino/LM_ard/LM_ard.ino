@@ -129,6 +129,10 @@ boolean laserScan = true;
 //scan but not move
 boolean noForwardMove = false;
 
+//reactor mode: activate by light repeat loop N times. 
+boolean reactor = false;
+int reactTimes = 1;
+int reactCount = reactTimes;
 
 void setup() {
 //  if (id == 5) BMPconstant = 100000;

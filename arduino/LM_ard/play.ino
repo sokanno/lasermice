@@ -1,11 +1,14 @@
 
 void play() {
-  if (playFlag) { // "play" only works when playFlag is true
+  if (playFlag && reactCount > 0) { // "play" only works when playFlag is true
 
     if ((millis() % cycleLength) > shiftAmount &&
         (millis() % cycleLength) < shiftAmount + debounce && !bangFlag) {
-      bangFlag_LSR = true;
-      bangFlag_SLND = true;
+      if (reactor) reactCount--;
+      if (reactCount != 0) {
+        bangFlag_LSR = true;
+        bangFlag_SLND = true;
+      }
       timeStamp_LSR = millis();
       bangFlag = true;
       turnFlag = true;
@@ -42,7 +45,7 @@ void play() {
       if (lightFollow) {
         int brghtnsL = analogRead(CDS_L);
         int brghtnsR = analogRead(CDS_R);
-//        int brDif = constrain(((brghtnsL - brghtnsR) / 2.0), -255, 255); // this "2.0" affects curve steepness, should be a param.
+        //        int brDif = constrain(((brghtnsL - brghtnsR) / 2.0), -255, 255); // this "2.0" affects curve steepness, should be a param.
         int brDif = constrain(((brghtnsL - brghtnsR) / curveSteepness), -255, 255); // this "2.0" affects curve steepness, should be a param.
 
         if (brDif > 0) { // means light is on the LEFT. so left wheel should be turn less.
@@ -55,7 +58,7 @@ void play() {
         }
         analogWrite(MTR_A_PWM, constrain((modulatedMotorSpeed - coefficient[0]), 0, 255));
         analogWrite(MTR_B_PWM, constrain((modulatedMotorSpeed - coefficient[1]), 0, 255));
-      } 
+      }
       else {
         analogWrite(MTR_A_PWM, modulatedMotorSpeed);
         analogWrite(MTR_B_PWM, modulatedMotorSpeed);
@@ -99,10 +102,14 @@ void play() {
       }
     }
   }
-  else if (!playFlag && lastPlayFlag) {
+  else if (!playFlag && lastPlayFlag || reactor && reactCount < 1) {
     analogWrite(MTR_A_PWM, 0);
     analogWrite(MTR_B_PWM, 0);
     // Serial.println("motor off");
+    if (reactor) {
+      playFlag = false;
+      reactCount = reactTimes;
+    }
   }
 
   // else if (!followLightFlag || !rotateReactFlag) {

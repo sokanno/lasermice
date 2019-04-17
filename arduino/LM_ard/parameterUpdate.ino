@@ -64,11 +64,13 @@ void parameterUpdate() {
         irNotification = true;
         break;
       case 5:
-        sequence = value;
+        reactTimes = value;
+        reactCount = reactTimes;
+        //        sequence = value;
         //converting value to array
-        for (int i = 0; i < 16; i++) {
-          beat[15 - i] = (value >> i) % 2;
-        }
+        //        for (int i = 0; i < 16; i++) {
+        //          beat[15 - i] = (value >> i) % 2;
+        //        }
         irCommandFlag = false;
         irNotification = true;
         break;
@@ -271,6 +273,16 @@ void parameterUpdate() {
             break;
           case 29: // noForwardMove deactivate
             noForwardMove = false;
+            irCommandFlag = false;
+            irNotification = true;
+            break;
+          case 30: // noForwardMove activate
+            reactor = true;
+            irCommandFlag = false;
+            irNotification = true;
+            break;
+          case 31: // noForwardMove deactivate
+            reactor = false;
             irCommandFlag = false;
             irNotification = true;
             break;
